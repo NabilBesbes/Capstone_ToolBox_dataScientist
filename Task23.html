@@ -220,16 +220,7 @@ hr {
 
 <pre><code class="r">linesTOread&lt;-50000
 blog &lt;- readLines(&quot;en_US/en_US.blogs.txt&quot;, linesTOread, skipNul = TRUE, warn = TRUE)
-</code></pre>
-
-<pre><code>## Warning in file(con, &quot;r&quot;): impossible d&#39;ouvrir le fichier &#39;en_US/
-## en_US.blogs.txt&#39; : No such file or directory
-</code></pre>
-
-<pre><code>## Error in file(con, &quot;r&quot;): impossible d&#39;ouvrir la connexion
-</code></pre>
-
-<pre><code class="r">#news &lt;- readLines(&quot;en_US/en_US.news.txt&quot;, linesTOread, skipNul = TRUE, warn = TRUE)
+#news &lt;- readLines(&quot;en_US/en_US.news.txt&quot;, linesTOread, skipNul = TRUE, warn = TRUE)
 #twitter &lt;- readLines(&quot;en_US/en_US.twitter.txt&quot;, linesTOread, skipNul = TRUE, warn = TRUE)
 #print(twitter)
 </code></pre>
@@ -238,15 +229,7 @@ blog &lt;- readLines(&quot;en_US/en_US.blogs.txt&quot;, linesTOread, skipNul = T
 
 <pre><code class="r">set.seed(2020)
 SampleBlogs  &lt;- sample(blog, 0.01 * length(blog) ) # take a sample
-</code></pre>
-
-<pre><code>## Error in sample(blog, 0.01 * length(blog)): objet &#39;blog&#39; introuvable
-</code></pre>
-
-<pre><code class="r">rm(blog)
-</code></pre>
-
-<pre><code>## Warning in rm(blog): objet &#39;blog&#39; introuvable
+rm(blog)
 </code></pre>
 
 <p>Word Counting and searching for the most frequent word 
@@ -258,49 +241,89 @@ We will use the <strong><em>ngram</em> library</strong></p>
 <pre><code>## Loading required package: ngram
 </code></pre>
 
-<pre><code>## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
-## logical.return = TRUE, : there is no package called &#39;ngram&#39;
-</code></pre>
-
-<pre><code>## Installing package into &#39;C:/Users/NABIL/Documents/R/win-library/3.6&#39;
-## (as &#39;lib&#39; is unspecified)
-</code></pre>
-
-<pre><code>## --- Please select a CRAN mirror for use in this session ---
-## package &#39;ngram&#39; successfully unpacked and MD5 sums checked
-## 
-## The downloaded binary packages are in
-##  C:\Users\NABIL\AppData\Local\Temp\Rtmp2jC2KO\downloaded_packages
-</code></pre>
-
 <pre><code class="r">text&lt;-preprocess(concatenate(SampleBlogs), case=&quot;lower&quot;, remove.punct = TRUE, fix.spacing = TRUE)
+head ( get.phrasetable(ng&lt;- ngram (text , n =1)), 15)
 </code></pre>
 
-<pre><code>## Error in preprocess(concatenate(SampleBlogs), case = &quot;lower&quot;, remove.punct = TRUE, : impossible de trouver la fonction &quot;preprocess&quot;
-</code></pre>
-
-<pre><code class="r">head ( get.phrasetable(ng&lt;- ngram (text , n =1)), 15)
-</code></pre>
-
-<pre><code>## Error in get.phrasetable(ng &lt;- ngram(text, n = 1)): impossible de trouver la fonction &quot;get.phrasetable&quot;
+<pre><code>##    ngrams freq        prop
+## 1    the   981 0.049946540
+## 2     to   606 0.030853826
+## 3    and   547 0.027849906
+## 4      a   422 0.021485668
+## 5     of   418 0.021282012
+## 6      i   386 0.019652767
+## 7     in   303 0.015426913
+## 8   that   221 0.011251973
+## 9     is   201 0.010233695
+## 10    it   191 0.009724556
+## 11   for   177 0.009011761
+## 12   was   172 0.008757192
+## 13   you   152 0.007738913
+## 14  with   145 0.007382516
+## 15    on   144 0.007331602
 </code></pre>
 
 <pre><code class="r">print(head (DT&lt;- get.phrasetable(ng2&lt;- ngram (text , n =2)), 15))
 </code></pre>
 
-<pre><code>## Error in get.phrasetable(ng2 &lt;- ngram(text, n = 2)): impossible de trouver la fonction &quot;get.phrasetable&quot;
+<pre><code>##       ngrams freq        prop
+## 1    of the    83 0.004226069
+## 2    in the    82 0.004175153
+## 3    to the    42 0.002138493
+## 4    on the    37 0.001883910
+## 5   for the    36 0.001832994
+## 6   and the    35 0.001782077
+## 7     i was    30 0.001527495
+## 8     to be    30 0.001527495
+## 9     and i    28 0.001425662
+## 10 from the    27 0.001374745
+## 11   it was    26 0.001323829
+## 12     in a    26 0.001323829
+## 13 with the    23 0.001171079
+## 14   at the    22 0.001120163
+## 15    it is    21 0.001069246
 </code></pre>
 
 <pre><code class="r">head ( get.phrasetable(ng3&lt;- ngram (text , n =3)), 15)
 </code></pre>
 
-<pre><code>## Error in get.phrasetable(ng3 &lt;- ngram(text, n = 3)): impossible de trouver la fonction &quot;get.phrasetable&quot;
+<pre><code>##            ngrams freq         prop
+## 1     be able to     9 0.0004582718
+## 2    at the time     8 0.0004073527
+## 3    some of the     7 0.0003564336
+## 4       a lot of     6 0.0003055145
+## 5  the fact that     5 0.0002545954
+## 6   in the grade     5 0.0002545954
+## 7  the grade two     5 0.0002545954
+## 8       it was a     5 0.0002545954
+## 9  the back yard     5 0.0002545954
+## 10    one of the     5 0.0002545954
+## 11  in the world     5 0.0002545954
+## 12     in the us     4 0.0002036764
+## 13      i do not     4 0.0002036764
+## 14    the end of     4 0.0002036764
+## 15    to be able     4 0.0002036764
 </code></pre>
 
 <pre><code class="r">head ( DT4&lt;-get.phrasetable(ng4&lt;- ngram (text , n =4)), 15)
 </code></pre>
 
-<pre><code>## Error in get.phrasetable(ng4 &lt;- ngram(text, n = 4)): impossible de trouver la fonction &quot;get.phrasetable&quot;
+<pre><code>##                  ngrams freq         prop
+## 1     the state of art     4 0.0002036867
+## 2    from the state of     4 0.0002036867
+## 3        to be able to     4 0.0002036867
+## 4        i do not have     3 0.0001527650
+## 5        at the end of     3 0.0001527650
+## 6       the end of the     3 0.0001527650
+## 7     in the grade two     3 0.0001527650
+## 8         when i was a     3 0.0001527650
+## 9      i am the living     2 0.0001018434
+## 10 iâ\200\231ll post some of     2 0.0001018434
+## 11   this was going to     2 0.0001018434
+## 12     i told him that     2 0.0001018434
+## 13      do not have to     2 0.0001018434
+## 14  a light blue hanky     2 0.0001018434
+## 15 knew this was going     2 0.0001018434
 </code></pre>
 
 <h3>ploting</h3>
@@ -308,22 +331,13 @@ We will use the <strong><em>ngram</em> library</strong></p>
 <p>bigram</p>
 
 <pre><code class="r">if (!require(&quot;ggplot2&quot;)) { install.packages(&quot;ggplot2&quot;) }
-</code></pre>
-
-<pre><code>## Loading required package: ggplot2
-</code></pre>
-
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.6.3
-</code></pre>
-
-<pre><code class="r">ggplot(DT[1:15,], aes(x=ngrams, y=freq)) + 
+ggplot(DT[1:15,], aes(x=ngrams, y=freq)) + 
     geom_bar(stat=&quot;Identity&quot;, fill=&quot;lightgreen&quot;) + 
     theme(axis.text.x = element_text(angle = 90, hjust = 1)) + xlab(&quot;2-grams&quot;) + 
     ylab(&quot;Frequency&quot;)
 </code></pre>
 
-<pre><code>## Error in ggplot(DT[1:15, ], aes(x = ngrams, y = freq)): objet &#39;DT&#39; introuvable
-</code></pre>
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-4"/></p>
 
 <p>other VIZ</p>
 
@@ -336,8 +350,7 @@ We will use the <strong><em>ngram</em> library</strong></p>
         axis.title.y = element_text(face=&quot;bold&quot;,color=&quot;darkblue&quot;, size=12))
 </code></pre>
 
-<pre><code>## Error in ggplot(DT[1:15, ], aes(x = ngrams, y = freq)): objet &#39;DT&#39; introuvable
-</code></pre>
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-5"/></p>
 
 <p>4-gram</p>
 
@@ -348,8 +361,7 @@ ggplot(DT4[1:10,], aes(x=ngrams, y=freq)) +
     ylab(&quot;Frequency&quot;)
 </code></pre>
 
-<pre><code>## Error in ggplot(DT4[1:10, ], aes(x = ngrams, y = freq)): objet &#39;DT4&#39; introuvable
-</code></pre>
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-6"/></p>
 
 <h3>Some other feature : Frequency sorted</h3>
 
@@ -366,7 +378,8 @@ ggplot(DT4[1:10,], aes(x=ngrams, y=freq)) +
 }
 </code></pre>
 
-<pre><code>## Error in get.phrasetable(ng): impossible de trouver la fonction &quot;get.phrasetable&quot;
+<pre><code>## [1] &quot;we have  111 words to cover over 50 % of our Datas&quot;
+## [1] &quot;we have  2980 words to cover over 90 % of our Datas&quot;
 </code></pre>
 
 </body>
